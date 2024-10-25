@@ -1,3 +1,9 @@
+/*
+Dealership will hold information about the dealership (name, address, ...) and maintain a
+ list of vehicles. Since it has the list of vehicles, it will also have the methods that
+ search the list for matching vehicles as well as add/remove vehicles.
+ */
+
 package com.pluralsight;
 
 import java.util.ArrayList;
@@ -8,7 +14,7 @@ public class Dealership {
     private String name;
     private String address;
     private String phone;
-    ArrayList<Vehicle> inventory;
+    static ArrayList<Vehicle> inventory;
 
     // Constructor
     public Dealership(String name, String address, String phone) {
@@ -71,9 +77,13 @@ public class Dealership {
     public List<Vehicle> getVehiclesByType(String vehicleType){
         return null;
     }
+
+    // To add vehicles to the dealership
     public void addVehicle(Vehicle vehicle){
         inventory.add(vehicle);
     }
+
+    // To remove vehicles from the dealership
     public void removeVehicle(Vehicle vehicle){
 
     }

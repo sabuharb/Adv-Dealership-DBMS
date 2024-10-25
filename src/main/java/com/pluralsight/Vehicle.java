@@ -1,3 +1,7 @@
+/*
+Vehicle will hold information about a specific vehicle
+ */
+
 package com.pluralsight;
 
 public class Vehicle {
