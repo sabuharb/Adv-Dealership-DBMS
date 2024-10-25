@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class DealershipFileManager {
 
-    public Dealership getDealership() throws FileNotFoundException {
+    public static Dealership getDealership() throws FileNotFoundException {
         Dealership dealership = null;
         try {
             // Create a Buffered Reader to load and read the inventory.csv file
