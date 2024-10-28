@@ -20,10 +20,10 @@ public class UserInterface {
     public UserInterface() {
     }
 
-    private void init() throws FileNotFoundException {
+    private void init() {
         this.dealership = DealershipFileManager.getDealership();
     }
-    public void display() throws FileNotFoundException {
+    public void display() {
         // call init method
         init();
 
@@ -32,7 +32,7 @@ public class UserInterface {
         while(true) {
 
             // Display the menu
-            System.out.println("""
+            System.out.print("""
                     Welcome to the Car Dealership App!
                     Select an option to continue.
                     1 - Find vehicles within a price range
@@ -44,7 +44,8 @@ public class UserInterface {
                     7 - List ALL vehicles
                     8 - Add a vehicle
                     9 - Remove a vehicle
-                    99 - Quit                          
+                    99 - Quit
+                    Enter your option: \
                     """);
 
             // Read user command
@@ -122,9 +123,14 @@ public class UserInterface {
 
     // Helper methods
     private void displayVehicles(List<Vehicle> vehicleList){
+        System.out.printf("%-7s|%-6s|%-8s|%-10s|%-15s|%-9s|%-10s|%-10s\n",
+                "VIN","Year","Make","Model","Vehicle Type","Color","Odometer","Price");
+        System.out.println("---------------------------------------------------------------------------------------");
+
         for(Vehicle vehicle: vehicleList){
             System.out.println(vehicle);
         }
+        System.out.println();
     }
 
     public void processAllVehiclesRequest(){
@@ -133,5 +139,6 @@ public class UserInterface {
         // call method to display the vehicles
         displayVehicles(vehicleList);
     }
+
 
 }

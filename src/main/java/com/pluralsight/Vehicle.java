@@ -5,7 +5,7 @@ Vehicle will hold information about a specific vehicle
 package com.pluralsight;
 
 public class Vehicle {
-    // Data members
+    // Data fields
     private int vin;
     private int year;
     private String make;
@@ -92,4 +92,14 @@ public class Vehicle {
     public void setPrice(double price) {
         this.price = price;
     }
+
+
+    @Override
+    public String toString(){
+        return String.format("%-7d", this.vin) + "|" + String.format("%-6d",this.year) +
+                "|" + String.format("%-8s",this.make) + "|" + String.format("%-10s",this.model) +
+                "|" + String.format("%-15s",this.vehicleType) + "|" + String.format("%-9s",this.color)
+                + "|" + String.format("%-10d", this.odometer) + "|" + String.format("%-10.2f", this.price);
+    }
+
 }

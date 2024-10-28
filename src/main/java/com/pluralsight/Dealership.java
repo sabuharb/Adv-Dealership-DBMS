@@ -14,7 +14,7 @@ public class Dealership {
     private String name;
     private String address;
     private String phone;
-    static ArrayList<Vehicle> inventory;
+    ArrayList<Vehicle> inventory;
 
     // Constructor
     public Dealership(String name, String address, String phone) {
@@ -50,15 +50,9 @@ public class Dealership {
     }
 
     // Methods
-    public ArrayList<Vehicle> getAllVehicles(){
-        return inventory;
-    }
-
     public List<Vehicle> getVehiclesByPrice(double min, double max){
-
         return null;
     }
-
     public List<Vehicle> getVehiclesByMakeModel(String make, String model){
         return null;
     }
@@ -77,6 +71,9 @@ public class Dealership {
     public List<Vehicle> getVehiclesByType(String vehicleType){
         return null;
     }
+    public List<Vehicle> getAllVehicles(){
+        return inventory;
+    }
 
     // To add vehicles to the dealership
     public void addVehicle(Vehicle vehicle){
@@ -85,6 +82,5 @@ public class Dealership {
 
     // To remove vehicles from the dealership
     public void removeVehicle(Vehicle vehicle){
-
     }
 }
