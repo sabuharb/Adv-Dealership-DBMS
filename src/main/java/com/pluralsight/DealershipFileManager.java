@@ -6,10 +6,7 @@ DealershipFileManager will be responsible for reading the dealership file, parsi
 
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class DealershipFileManager {
 
@@ -44,6 +41,23 @@ public class DealershipFileManager {
     }
 
     // Will overwrite the inventory.csv file with the current dealership
-    public void saveDealership(Dealership dealership){
+    public static void saveDealership(Dealership dealership){
+        try {
+            // write to file
+            BufferedWriter bufWriter = new BufferedWriter(new FileWriter("src/main/resources/inventory.csv"));
+
+            bufWriter.write(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone() + "\n");
+
+            for(Vehicle vehicle: dealership.inventory){
+                bufWriter.write(vehicle.getVin() + "|" + vehicle.getYear() + "|"
+                + vehicle.getMake() + "|" + vehicle.getModel() + "|" + vehicle.getVehicleType() + "|" +
+                        vehicle.getColor() + "|" + vehicle.getOdometer() + "|" + String.format("%.2f",vehicle.getPrice())
+                        + "\n");
+            }
+
+            bufWriter.close();
+        }catch (IOException e){
+            System.out.println("The file could not be saved.");
+        }
     }
 }

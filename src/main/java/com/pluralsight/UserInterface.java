@@ -7,11 +7,12 @@ display the vehicles it returns.)
 
 package com.pluralsight;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
+
+    Scanner scanner = new Scanner(System.in);
 
     // Dealership object
     Dealership dealership;
@@ -27,13 +28,13 @@ public class UserInterface {
         // call init method
         init();
 
-        Scanner scanner = new Scanner(System.in);
 
         while(true) {
 
             // Display the menu
             System.out.print("""
-                    Welcome to the Car Dealership App!
+                    🚗 Welcome to the Car Dealership App! 🚗
+                    -----------------------------------------
                     Select an option to continue.
                     1 - Find vehicles within a price range
                     2 - Find vehicles by make / model
@@ -45,6 +46,7 @@ public class UserInterface {
                     8 - Add a vehicle
                     9 - Remove a vehicle
                     99 - Quit
+                    
                     Enter your option: \
                     """);
 
@@ -82,6 +84,9 @@ public class UserInterface {
                     processRemoveVehicleRequest();
                     break;
                 case 99:
+                    System.out.println("Thank you, come back soon!");
+                    System.out.println("\uD80C\uDD9D \uD80C\uDD9F \uD80C\uDD9E \uD80C\uDD9D 🐈‍");
+                    scanner.close();
                     System.exit(0);
                     break;
                 default:
@@ -92,40 +97,100 @@ public class UserInterface {
     }
 
     // Methods
-    public double processGetByPriceRequest(){
-        return 0;
+    public void processGetByPriceRequest(){
+        System.out.print("Enter the minimum price: ");
+        double min = scanner.nextDouble();
+        System.out.print("Enter the maximum price: ");
+        double max = scanner.nextDouble();
+        scanner.nextLine();
+
+        List<Vehicle> vehicleList = dealership.getVehiclesByPrice(min, max);
+        displayVehicles(vehicleList);
     }
-    public String processGetByMakeModelRequest(){
-        return "";
+    public void processGetByMakeModelRequest(){
+        System.out.print("Enter the make: ");
+        String make = scanner.nextLine().trim();
+        System.out.print("Enter the model: ");
+        String model = scanner.nextLine().trim();
+
+        List<Vehicle> vehicleList = dealership.getVehiclesByMakeModel(make, model);
+        displayVehicles(vehicleList);
     }
 
-    public int processGetByYearRequest(){
-        return 0;
+    public void processGetByYearRequest(){
+        System.out.print("Enter minimum year: ");
+        int yearMin = scanner.nextInt();
+        System.out.print("Enter maximum year: ");
+        int yearMax = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Vehicle> vehicleList = dealership.getVehiclesByYear(yearMin, yearMax);
+        displayVehicles(vehicleList);
     }
-    public String processGetByColorRequest(){
-        return "";
+    public void processGetByColorRequest(){
+        System.out.print("Enter color: ");
+        String color = scanner.nextLine().trim();
+
+        List<Vehicle> vehicleList = dealership.getVehiclesByColor(color);
+        displayVehicles(vehicleList);
     }
-    public int processGetByMileageRequest(){
-        return 0;
+    public void processGetByMileageRequest(){
+        System.out.print("Enter minimum mileage: ");
+        int minMileage = scanner.nextInt();
+        System.out.print("Enter maximum mileage: ");
+        int maxMileage = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Vehicle> vehicleList = dealership.getVehiclesByMileage(minMileage, maxMileage);
+        displayVehicles(vehicleList);
     }
-    public String processGetByVehicleTypeRequest(){
-        return "";
+    public void processGetByVehicleTypeRequest(){
+        System.out.print("Enter vehicle type: ");
+        String vehicleType = scanner.nextLine().trim();
+
+        List<Vehicle> vehicleList = dealership.getVehiclesByType(vehicleType);
+        displayVehicles(vehicleList);
     }
     public void processGetAllVehiclesRequest(){
          processAllVehiclesRequest();
     }
     public void processAddVehicleRequest(){
+        System.out.print("Enter the vin: ");
+        int vin = scanner.nextInt();
+        System.out.print("Enter the year: ");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter the make: ");
+        String make = scanner.nextLine().trim();
+        System.out.print("Enter the model: ");
+        String model = scanner.nextLine().trim();
+        System.out.print("Enter the vehicle type: ");
+        String vehicleType = scanner.nextLine().trim();
+        System.out.print("Enter the color: ");
+        String color = scanner.nextLine().trim();
+        System.out.print("Enter the mileage: ");
+        int odometer = scanner.nextInt();
+        System.out.print("Enter the price: ");
+        double price = scanner.nextDouble();
 
+        dealership.addVehicle(new Vehicle(vin,year,make,model,vehicleType,color,odometer,price));
+        DealershipFileManager.saveDealership(dealership);
+        System.out.println("Your vehicle has been successfully added.");
     }
     public void processRemoveVehicleRequest(){
+        System.out.print("Enter the vin of the vehicle you want to remove: ");
+        int vin = scanner.nextInt();
 
+        dealership.removeVehicle(new Vehicle(vin,0,"","","","",0,0));
+        DealershipFileManager.saveDealership(dealership);
+        System.out.println("Your vehicle has been successfully removed.");
     }
 
     // Helper methods
     private void displayVehicles(List<Vehicle> vehicleList){
         System.out.printf("%-7s|%-6s|%-8s|%-10s|%-15s|%-9s|%-10s|%-10s\n",
                 "VIN","Year","Make","Model","Vehicle Type","Color","Odometer","Price");
-        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------");
 
         for(Vehicle vehicle: vehicleList){
             System.out.println(vehicle);
