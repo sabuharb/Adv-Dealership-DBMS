@@ -46,7 +46,7 @@ public class UserInterface {
                     8 - Add a vehicle
                     9 - Remove a vehicle
                     99 - Quit
-                    
+                    ˚‧｡⋆🌻⋆｡‧˚
                     Enter your option: \
                     """);
 
