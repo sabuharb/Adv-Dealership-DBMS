@@ -45,6 +45,7 @@ public class UserInterface {
                     7 - List ALL vehicles
                     8 - Add a vehicle
                     9 - Remove a vehicle
+                    10 - Sell/Lease a Vehicle
                     99 - Quit
                     ˚‧｡⋆🌻⋆｡‧˚
                     Enter your option: \
@@ -83,6 +84,9 @@ public class UserInterface {
                 case 9:
                     processRemoveVehicleRequest();
                     break;
+                case 10:
+                    processSellLeaseVehicleRequest();
+                    break;
                 case 99:
                     System.out.println("Thank you, come back soon!");
                     System.out.println("\uD80C\uDD9D \uD80C\uDD9F \uD80C\uDD9E \uD80C\uDD9D 🐈‍");
@@ -94,6 +98,14 @@ public class UserInterface {
                     break;
             }
         }
+    }
+
+    private void processSellLeaseVehicleRequest() {
+        System.out.println("Enter the VIN of the vehicle: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+
+
     }
 
     // Methods
