@@ -7,6 +7,7 @@ display the vehicles it returns.)
 
 package com.yearup.dealership;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,8 +15,9 @@ public class UserInterface {
 
     Scanner scanner = new Scanner(System.in);
 
-    // Dealership object
     Dealership dealership;
+    Vehicle vehicle;
+
 
     // Parameterless constructor
     public UserInterface() {
@@ -101,11 +103,67 @@ public class UserInterface {
     }
 
     private void processSellLeaseVehicleRequest() {
-        System.out.println("Enter the VIN of the vehicle: ");
+        System.out.print("Sale (S) or Lease (L): ");
+        String typeOfContract = scanner.nextLine();
+
+        if(typeOfContract.equalsIgnoreCase("S")){
+            processSaleContract();
+
+        } else if (typeOfContract.equalsIgnoreCase("L")) {
+             processLeaseContract();
+        } else {
+        }
+    }
+
+    public void processSaleContract(){
+        SalesContract salesContract;
+
+        System.out.print("Enter date of Contract: ");
+        String date = scanner.nextLine().trim();
+        System.out.print("Enter the customer's name: ");
+        String customerName = scanner.nextLine().trim();
+        System.out.print("Enter the customer's email: ");
+        String customerEmail = scanner.nextLine().trim();
+        // Find the vehicle
+        System.out.print("Enter the VIN of the vehicle: ");
         int vin = scanner.nextInt();
         scanner.nextLine();
 
+        vehicle = dealership.getVehicleByVin(vin);  // get the vehicle if it's available
+        System.out.println("Vehicle price: " + vehicle.getPrice());
 
+        boolean isSold = (vehicle == null); // the vehicle is sold if it's null
+
+        System.out.print("Would you like to finance (Y) for yes and (N) for no: ");
+        boolean finance = (scanner.nextLine().trim().equalsIgnoreCase("Y"));
+        salesContract = new SalesContract(date,customerName,customerEmail, isSold, finance);
+
+        System.out.println("The total price to purchase this vehicle is: " + salesContract.getTotalPrice());
+        System.out.println("The monthly payment is: " + salesContract.getMonthlyPayment());
+
+
+    }
+
+    public void processLeaseContract(){
+        Vehicle vehicle;
+        SalesContract leaseContract;
+
+        System.out.print("Enter the VIN of the vehicle: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+        vehicle = dealership.getVehicleByVin(vin);
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        int yearsOld = localDateTime.getYear() - vehicle.getYear();
+        if(yearsOld > 3){
+            System.out.println("You cannot lease a vehicle over 3 years old.");
+        }else{
+
+
+
+        }
+        // leaseContract = new LeaseContract();
+        //processGetOriginalPrice();
     }
 
     // Methods

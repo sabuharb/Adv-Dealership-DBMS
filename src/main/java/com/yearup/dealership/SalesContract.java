@@ -2,15 +2,14 @@ package com.yearup.dealership;
 
 public class SalesContract extends Contract{
     // Data fields
-    private float salesTaxAmount, recordingFee, processingFee;
+    private float salesTaxAmount = 0.05f, recordingFee = 100, processingFee;
     private boolean finance;
+    UserInterface userInterface = new UserInterface();
+    private double originalPrice;
 
     // Constructor
-    public SalesContract(String dateOfContract, String customerName, String customerEmail, boolean vehicleSold, float salesTaxAmount, float recordingFee, float processingFee, boolean finance) {
+    public SalesContract(String dateOfContract, String customerName, String customerEmail, boolean vehicleSold, boolean finance) {
         super(dateOfContract, customerName, customerEmail, vehicleSold);
-        this.salesTaxAmount = salesTaxAmount;
-        this.recordingFee = recordingFee;
-        this.processingFee = processingFee;
         this.finance = finance;
     }
 
@@ -18,14 +17,18 @@ public class SalesContract extends Contract{
     @Override
     public double getTotalPrice(){
 
-        totalPrice = this.recordingFee + this.processingFee;
-
-        return 0;
+        return this.totalPrice = originalPrice + (originalPrice * salesTaxAmount) +
+                this.recordingFee + this.processingFee;
     }
 
     @Override
     public double getMonthlyPayment(){
-        return 0;
+        if(this.finance && this.originalPrice >= 10000){
+            this.monthlyPayment = (this.totalPrice + (this.totalPrice * 0.0425)) / 48;
+        }else if(this.finance && this.originalPrice < 10000){
+            this.monthlyPayment = (this.totalPrice + (this.totalPrice * 0.0525)) / 24;
+        }
+        return this.monthlyPayment;
     }
 
     // Getters and Setters
@@ -46,7 +49,12 @@ public class SalesContract extends Contract{
     }
 
     public float getProcessingFee() {
-        return processingFee;
+        if (this.originalPrice < 10000){
+            this.processingFee = 295;
+        }else{
+            this.processingFee = 495;
+        }
+        return this.processingFee;
     }
 
     public void setProcessingFee(float processingFee) {
