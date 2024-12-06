@@ -117,7 +117,6 @@ public class UserInterface {
 
     public void processSaleContract(){
         SalesContract salesContract;
-
         System.out.print("Enter date of Contract: ");
         String date = scanner.nextLine().trim();
         System.out.print("Enter the customer's name: ");
@@ -128,20 +127,19 @@ public class UserInterface {
         System.out.print("Enter the VIN of the vehicle: ");
         int vin = scanner.nextInt();
         scanner.nextLine();
-
         vehicle = dealership.getVehicleByVin(vin);  // get the vehicle if it's available
-        System.out.println("Vehicle price: " + vehicle.getPrice());
+
 
         boolean isSold = (vehicle == null); // the vehicle is sold if it's null
 
         System.out.print("Would you like to finance (Y) for yes and (N) for no: ");
         boolean finance = (scanner.nextLine().trim().equalsIgnoreCase("Y"));
         salesContract = new SalesContract(date,customerName,customerEmail, isSold, finance);
+        salesContract.setOriginalPrice(vehicle.getPrice());
 
-        System.out.println("The total price to purchase this vehicle is: " + salesContract.getTotalPrice());
-        System.out.println("The monthly payment is: " + salesContract.getMonthlyPayment());
-
-
+        System.out.printf("The total price to purchase this vehicle is: %.2f\n", salesContract.getTotalPrice());
+        System.out.printf("The monthly payment is: %.2f\n", salesContract.getMonthlyPayment());
+        
     }
 
     public void processLeaseContract(){

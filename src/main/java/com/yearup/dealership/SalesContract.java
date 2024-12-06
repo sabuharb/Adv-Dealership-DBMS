@@ -4,7 +4,6 @@ public class SalesContract extends Contract{
     // Data fields
     private float salesTaxAmount = 0.05f, recordingFee = 100, processingFee;
     private boolean finance;
-    UserInterface userInterface = new UserInterface();
     private double originalPrice;
 
     // Constructor
@@ -18,7 +17,7 @@ public class SalesContract extends Contract{
     public double getTotalPrice(){
 
         return this.totalPrice = originalPrice + (originalPrice * salesTaxAmount) +
-                this.recordingFee + this.processingFee;
+                this.recordingFee + getProcessingFee();
     }
 
     @Override
@@ -29,6 +28,14 @@ public class SalesContract extends Contract{
             this.monthlyPayment = (this.totalPrice + (this.totalPrice * 0.0525)) / 24;
         }
         return this.monthlyPayment;
+    }
+
+    public void setOriginalPrice(double originalPrice){
+        this.originalPrice = originalPrice;
+    }
+
+    public double getOriginalPrice(){
+        return this.originalPrice;
     }
 
     // Getters and Setters
