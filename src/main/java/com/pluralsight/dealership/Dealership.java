@@ -4,13 +4,14 @@ Dealership will hold information about the dealership (name, address, ...) and m
  search the list for matching vehicles as well as add/remove vehicles.
  */
 
-package com.yearup.dealership;
+package com.pluralsight.dealership;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Dealership {
     // Data fields
+    private int dealership_id;
     private String name;
     private String address;
     private String phone;

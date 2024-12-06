@@ -1,7 +1,8 @@
-package com.yearup.dealership;
+package com.pluralsight.dealership;
 
 public class LeaseContract extends Contract{
     // Data fields
+    private int dealership_id;
     private float expectedEndingValue, leaseFee;
     private double originalPrice;
 

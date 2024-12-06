@@ -1,7 +1,8 @@
-package com.yearup.dealership;
+package com.pluralsight.dealership;
 
 public class SalesContract extends Contract{
     // Data fields
+    private int dealership_id;
     private float salesTaxAmount = 0.05f, recordingFee = 100, processingFee;
     private boolean finance;
     private double originalPrice;
