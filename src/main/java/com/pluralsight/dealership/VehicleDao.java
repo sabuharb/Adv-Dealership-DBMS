@@ -235,44 +235,4 @@ public class VehicleDao {
         }
         return vehicles;
     }
-
-// to do DRY
-//    public List<Vehicle> getVehiclesRange(String query){
-//        List<Vehicle> vehicles = new ArrayList<>();
-//        //String query = "SELECT * FROM Vehicles WHERE year BETWEEN ? AND ?;";
-//        try (
-//                Connection connection = this.dataSource.getConnection();
-//                PreparedStatement statement = connection.prepareStatement(query)
-//        ) {
-//            statement.setFloat(1,minYear);
-//            statement.setFloat(2,maxYear);
-//
-//            try(
-//                    ResultSet results = statement.executeQuery()
-//            ) {
-//                if(results.next()) {
-//                    do {
-//                        String vin = results.getString("VIN");
-//                        int year = results.getInt("Year");
-//                        String make = results.getString("Make");
-//                        String model = results.getString("Model");
-//                        String vehicleType = results.getString("Vehicle_Type");
-//                        String color = results.getString("Color");
-//                        float odometer = results.getFloat("Odometer");
-//                        float price = results.getFloat("Price");
-//
-//                        vehicles.add(new Vehicle(vin, year, make, model, vehicleType, color, odometer, price));
-//
-//                    } while (results.next());
-//                }else{
-//                    System.out.println("No matches!");
-//                }
-//            } catch (SQLException e) {
-//                System.out.println("Failed to execute query.");
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Failed to create connection or prepared statement.");
-//        }
-//        return vehicles;
-//    }
 }
