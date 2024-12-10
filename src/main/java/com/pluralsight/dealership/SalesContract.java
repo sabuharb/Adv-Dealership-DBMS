@@ -1,4 +1,4 @@
-package com.yearup.dealership;
+package com.pluralsight.dealership;
 
 public class SalesContract extends Contract{
     // Data fields

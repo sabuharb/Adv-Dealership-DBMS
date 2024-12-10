@@ -4,7 +4,7 @@ Dealership will hold information about the dealership (name, address, ...) and m
  search the list for matching vehicles as well as add/remove vehicles.
  */
 
-package com.yearup.dealership;
+package com.pluralsight.dealership;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public class Dealership {
         return vehiclesColorList;
     }
 
-    public  List<Vehicle> getVehiclesByMileage(double min,double max){
+    public  List<Vehicle> getVehiclesByMileage(float min,float max){
         List<Vehicle> vehicleByMileage = new ArrayList<>();
         for(Vehicle vehicle: inventory){
             if(vehicle.getOdometer() >= min && vehicle.getOdometer() <= max){
@@ -109,10 +109,10 @@ public class Dealership {
         return vehicleByType;
     }
 
-    public Vehicle getVehicleByVin(int vin){
+    public Vehicle getVehicleByVin(String vin){
 
         for(Vehicle vehicle : inventory){
-            if(vehicle.getVin() == vin) {
+            if(vehicle.getVin().equalsIgnoreCase(vin)) {
                 return vehicle;
             }
         }

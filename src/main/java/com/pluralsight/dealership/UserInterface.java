@@ -5,7 +5,7 @@ and "dispatching" of the commands to the Dealership as needed. (ex: when the use
 display the vehicles it returns.)
  */
 
-package com.yearup.dealership;
+package com.pluralsight.dealership;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,12 +15,14 @@ public class UserInterface {
 
     Scanner scanner = new Scanner(System.in);
 
+    VehicleDao vehicleDao;
     Dealership dealership;
     Vehicle vehicle;
 
 
     // Parameterless constructor
-    public UserInterface() {
+    public UserInterface(VehicleDao vehicleDao) {
+        this.vehicleDao = vehicleDao;
     }
 
     private void init() {
@@ -125,8 +127,7 @@ public class UserInterface {
         String customerEmail = scanner.nextLine().trim();
         // Find the vehicle
         System.out.print("Enter the VIN of the vehicle: ");
-        int vin = scanner.nextInt();
-        scanner.nextLine();
+        String vin = scanner.nextLine();
         vehicle = dealership.getVehicleByVin(vin);  // get the vehicle if it's available
 
 
@@ -147,8 +148,7 @@ public class UserInterface {
         SalesContract leaseContract;
 
         System.out.print("Enter the VIN of the vehicle: ");
-        int vin = scanner.nextInt();
-        scanner.nextLine();
+        String vin = scanner.nextLine();
         vehicle = dealership.getVehicleByVin(vin);
 
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -167,21 +167,23 @@ public class UserInterface {
     // Methods
     public void processGetByPriceRequest(){
         System.out.print("Enter the minimum price: ");
-        double min = scanner.nextDouble();
+        float min = scanner.nextFloat();
         System.out.print("Enter the maximum price: ");
-        double max = scanner.nextDouble();
+        float max = scanner.nextFloat();
         scanner.nextLine();
 
-        List<Vehicle> vehicleList = dealership.getVehiclesByPrice(min, max);
+        //List<Vehicle> vehicleList = dealership.getVehiclesByPrice(min, max);
+        List<Vehicle> vehicleList = vehicleDao.getVehiclesByPrice(min, max);
         displayVehicles(vehicleList);
     }
     public void processGetByMakeModelRequest(){
-        System.out.print("Enter the make: ");
-        String make = scanner.nextLine().trim();
-        System.out.print("Enter the model: ");
-        String model = scanner.nextLine().trim();
+        System.out.print("Enter the make or model: ");
+        String name = scanner.nextLine().trim();
+//        System.out.print("Enter the model: ");
+//        String model = scanner.nextLine().trim();
 
-        List<Vehicle> vehicleList = dealership.getVehiclesByMakeModel(make, model);
+        //List<Vehicle> vehicleList = dealership.getVehiclesByMakeModel(make, model);
+        List<Vehicle> vehicleList = vehicleDao.getVehiclesByMakeModel(name);
         displayVehicles(vehicleList);
     }
 
@@ -192,31 +194,35 @@ public class UserInterface {
         int yearMax = scanner.nextInt();
         scanner.nextLine();
 
-        List<Vehicle> vehicleList = dealership.getVehiclesByYear(yearMin, yearMax);
+        //List<Vehicle> vehicleList = dealership.getVehiclesByYear(yearMin, yearMax);
+        List<Vehicle> vehicleList = vehicleDao.getVehiclesByYear(yearMin, yearMax);
         displayVehicles(vehicleList);
     }
     public void processGetByColorRequest(){
         System.out.print("Enter color: ");
         String color = scanner.nextLine().trim();
 
-        List<Vehicle> vehicleList = dealership.getVehiclesByColor(color);
+        //List<Vehicle> vehicleList = dealership.getVehiclesByColor(color);
+        List<Vehicle> vehicleList = vehicleDao.getVehiclesByColor(color);
         displayVehicles(vehicleList);
     }
     public void processGetByMileageRequest(){
         System.out.print("Enter minimum mileage: ");
-        int minMileage = scanner.nextInt();
+        float minMileage = scanner.nextFloat();
         System.out.print("Enter maximum mileage: ");
-        int maxMileage = scanner.nextInt();
+        float maxMileage = scanner.nextFloat();
         scanner.nextLine();
 
-        List<Vehicle> vehicleList = dealership.getVehiclesByMileage(minMileage, maxMileage);
+        //List<Vehicle> vehicleList = dealership.getVehiclesByMileage(minMileage, maxMileage);
+        List<Vehicle> vehicleList = vehicleDao.getVehiclesByMileage(minMileage, maxMileage);
         displayVehicles(vehicleList);
     }
     public void processGetByVehicleTypeRequest(){
         System.out.print("Enter vehicle type: ");
         String vehicleType = scanner.nextLine().trim();
 
-        List<Vehicle> vehicleList = dealership.getVehiclesByType(vehicleType);
+        //List<Vehicle> vehicleList = dealership.getVehiclesByType(vehicleType);
+        List<Vehicle> vehicleList = vehicleDao.getVehiclesByType(vehicleType);
         displayVehicles(vehicleList);
     }
     public void processGetAllVehiclesRequest(){
@@ -224,7 +230,7 @@ public class UserInterface {
     }
     public void processAddVehicleRequest(){
         System.out.print("Enter the vin: ");
-        int vin = scanner.nextInt();
+        String vin = scanner.nextLine();
         System.out.print("Enter the year: ");
         int year = scanner.nextInt();
         scanner.nextLine();
@@ -237,9 +243,9 @@ public class UserInterface {
         System.out.print("Enter the color: ");
         String color = scanner.nextLine().trim();
         System.out.print("Enter the mileage: ");
-        int odometer = scanner.nextInt();
+        float odometer = scanner.nextFloat();
         System.out.print("Enter the price: ");
-        double price = scanner.nextDouble();
+        float price = scanner.nextFloat();
 
         dealership.addVehicle(new Vehicle(vin,year,make,model,vehicleType,color,odometer,price));
         DealershipFileManager.saveDealership(dealership);
@@ -247,7 +253,7 @@ public class UserInterface {
     }
     public void processRemoveVehicleRequest(){
         System.out.print("Enter the vin of the vehicle you want to remove: ");
-        int vin = scanner.nextInt();
+        String vin = scanner.nextLine();
 
         dealership.removeVehicle(new Vehicle(vin,0,"","","","",0,0));
         DealershipFileManager.saveDealership(dealership);
@@ -256,9 +262,9 @@ public class UserInterface {
 
     // Helper methods
     private void displayVehicles(List<Vehicle> vehicleList){
-        System.out.printf("%-7s|%-6s|%-8s|%-10s|%-15s|%-9s|%-10s|%-10s\n",
-                "VIN","Year","Make","Model","Vehicle Type","Color","Odometer","Price");
-        System.out.println("--------------------------------------------------------------------------------");
+        System.out.printf("%-19s|%-6s|%-15s|%-10s|%-14s|%-8s|%-10s|%-10s\n",
+                "VIN","Year","Make","Model","Vehicle_Type","Color","Odometer","Price");
+        System.out.println("----------------------------------------------------------------------------------------------");
 
         for(Vehicle vehicle: vehicleList){
             System.out.println(vehicle);

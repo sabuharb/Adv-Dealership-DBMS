@@ -4,7 +4,7 @@ DealershipFileManager will be responsible for reading the dealership file, parsi
  for saving a dealership and the vehicles back into the file in the same pipe-delimited format.
  */
 
-package com.yearup.dealership;
+package com.pluralsight.dealership;
 
 import java.io.*;
 
@@ -28,14 +28,14 @@ public class DealershipFileManager {
 
                 // populate the inventory with a list of Vehicles
                 // Use the parts to create a Vehicle object and add the object to the ArrayList
-                dealership.addVehicle(new Vehicle(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]),
-                        tokens[2], tokens[3], tokens[4], tokens[5], Integer.parseInt(tokens[6]), Double.parseDouble(tokens[7])));
+                dealership.addVehicle(new Vehicle(tokens[0], Integer.parseInt(tokens[1]),
+                        tokens[2], tokens[3], tokens[4], tokens[5], Integer.parseInt(tokens[6]), Float.parseFloat(tokens[7])));
             }
 
             // close the Buffered Reader
             bufReader.close();
         }catch (IOException e){
-            e.printStackTrace();
+            System.out.println("Failed to read file.");
         }
         return dealership;
     }
@@ -57,7 +57,7 @@ public class DealershipFileManager {
 
             bufWriter.close();
         }catch (IOException e){
-            System.out.println("The file could not be saved.");
+            System.out.println("Failed to write to file.");
         }
     }
 }

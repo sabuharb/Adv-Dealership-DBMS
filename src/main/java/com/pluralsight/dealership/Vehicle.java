@@ -2,22 +2,17 @@
 Vehicle will hold information about a specific vehicle
  */
 
-package com.yearup.dealership;
+package com.pluralsight.dealership;
 
 public class Vehicle {
     // Data fields
-    private int vin;
     private int year;
-    private String make;
-    private String model;
-    private String vehicleType;
-    private String color;
-    private int odometer;
-    private double price;
+    private String vin, make, model, vehicleType, color;
+    private float odometer, price;
 
 
     // Constructor
-    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
+    public Vehicle(String vin, int year, String make, String model, String vehicleType, String color, float odometer, float price) {
         this.vin = vin;
         this.year = year;
         this.make = make;
@@ -29,11 +24,11 @@ public class Vehicle {
     }
 
     // Getters and Setters
-    public int getVin() {
+    public String getVin() {
         return vin;
     }
 
-    public void setVin(int vin) {
+    public void setVin(String vin) {
         this.vin = vin;
     }
 
@@ -77,29 +72,28 @@ public class Vehicle {
         this.color = color;
     }
 
-    public int getOdometer() {
+    public float getOdometer() {
         return odometer;
     }
 
-    public void setOdometer(int odometer) {
+    public void setOdometer(float odometer) {
         this.odometer = odometer;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
 
     @Override
     public String toString(){
-        return String.format("%-7d", this.vin) + "|" + String.format("%-6d",this.year) +
-                "|" + String.format("%-8s",this.make) + "|" + String.format("%-10s",this.model) +
-                "|" + String.format("%-15s",this.vehicleType) + "|" + String.format("%-9s",this.color)
-                + "|" + String.format("%-10d", this.odometer) + "|" + String.format("%-10.2f", this.price);
+        return String.format("%-19s|%-6s|%-15s|%-10s|%-14s|%-8s|%-10.1f|%-10.2f",
+                this.vin,this.year, this.make, this.model, this.vehicleType, this.color,
+                this.odometer, this.price);
     }
 
 }
